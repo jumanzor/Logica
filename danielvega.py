@@ -4,3 +4,7 @@ nombre = input ("Cual es su nombre?")
 
 print(nombre+" Playito")
 
+if nombre=="daniel":
+    print ("Falso")
+else:
+   print("Real")
