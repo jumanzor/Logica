@@ -1,24 +1,23 @@
 
 
-print("hola mundo")
-print("hola mundo")
-print("hola mundo")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 '''
+#  programar un juego de TETRIS
+
+1. pintar el GRID (la cuadrícula)  area de juego
+2. pintemos un cuadro
+3. hagamos que ese cuadro caiga solo
+4. mover el cuadro (derecha/izquierda)
+5. detectar colision (con otreas piezas y el fondo)
+6. eliminar linea completada
+7. rotar piezas
+8. tener varios tipos de piezas
+'''
+
+
+
+
+
 
 # ya pinta los diferentes bloques
 # falta mejorarlo
@@ -103,5 +102,3 @@ while ejecutando:
 pygame.quit()
 sys.exit()
 
-
-'''
