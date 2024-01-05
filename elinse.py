@@ -13,7 +13,7 @@ global bloqueActual
 pygame.init()
 
 vColor = (255, 255, 255)
-
+rojo = (255, 0, 0)
 
 # Configuración de la ventana
 vVentanaAncho = 401
