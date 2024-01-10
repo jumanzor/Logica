@@ -50,27 +50,28 @@ vCantidadColumnas = 10
 vBloqueTamano = vVentanaAncho // vCantidadColumnas
 
 
+# Inicialización de la cuadrícula de juego con valores en cero
+# una matriz  ne python son listas anidadas 
+vCuadricula = []
+
+for _ in range(vCantidadFilas):
+    fila = []
+    for _ in range(vCantidadColumnas):
+        fila.append(0)
+    vCuadricula.append(fila)
+
+
 ############################################################
 #  funciones
 ############################################################
 
 
 def dibujaCuadricula():
-            #fila 1
-            pygame.draw.rect(vVentana, vColor, (0, 0, vBloqueTamano, vBloqueTamano), 1 )
-            pygame.draw.rect(vVentana, vColor, (40,0 , vBloqueTamano, vBloqueTamano), 1 )
-            pygame.draw.rect(vVentana, vColor, (80,0 , vBloqueTamano, vBloqueTamano), 1 )
-            pygame.draw.rect(vVentana, vColor, (120,0 , vBloqueTamano, vBloqueTamano), 1 )
-            #fila 2
-            pygame.draw.rect(vVentana, vColor, (0, 40, vBloqueTamano, vBloqueTamano), 1 )
-            pygame.draw.rect(vVentana, vColor, (40,40 , vBloqueTamano, vBloqueTamano), 1 )
-            pygame.draw.rect(vVentana, vColor, (80,40 , vBloqueTamano, vBloqueTamano), 1 )
-            pygame.draw.rect(vVentana, vColor, (120,40 , vBloqueTamano, vBloqueTamano), 1 )
-            #fila 3
-            pygame.draw.rect(vVentana, vColor, (0, 80, vBloqueTamano, vBloqueTamano), 1 )
-            pygame.draw.rect(vVentana, vColor, (40,80 , vBloqueTamano, vBloqueTamano), 1 )
-            pygame.draw.rect(vVentana, vColor, (80,80 , vBloqueTamano, vBloqueTamano), 1 )
-            pygame.draw.rect(vVentana, vColor, (120,80 , vBloqueTamano, vBloqueTamano), 1 )
+    for y in range(vCantidadFilas):
+        for x in range(vCantidadColumnas):
+            pygame.draw.rect(vVentana, 
+                             vColor, 
+                             (x * vBloqueTamano, y * vBloqueTamano, vBloqueTamano, vBloqueTamano), 1)
 
 
 ############################################################
