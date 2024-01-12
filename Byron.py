@@ -21,7 +21,7 @@
 # programa el juego de TETRIS
 
 1. pintar el GRID (la cuadricula) area del juego
-2.pintar un cuadro
+2. pintar un cuadro
 3. hagamos que ese cuadro caiga solo
 4. mover el cuadro (derecha, izquierda)
 5. detectar colisiones (con otras piezas y el fondo)
@@ -61,33 +61,30 @@ vCantidadFilas = 20
 vCantidadColumnas = 10
 vBloqueTamano = vVentanaAncho // vCantidadColumnas
 
+# Color
+vColor = (255, 255, 255)
+
+
+# Inicialización de la ventana
+vVentana = pygame.display.set_mode((vVentanaAncho, vVentanaAlto))
+pygame.display.set_caption("Juego del Tetris")
+
 
 ############################################################
 #  funciones
 ############################################################
 
 def dibujaCuadricula():
-            #fila 1
-            pygame.draw.rect(vVentana, vColor, (0, 0, vBloqueTamano, vBloqueTamano), 1 )
-            pygame.draw.rect(vVentana, vColor, (40,0 , vBloqueTamano, vBloqueTamano), 1 )
-            pygame.draw.rect(vVentana, vColor, (80,0 , vBloqueTamano, vBloqueTamano), 1 )
-            pygame.draw.rect(vVentana, vColor, (120,0 , vBloqueTamano, vBloqueTamano), 1 )
-            #fila 2
-            pygame.draw.rect(vVentana, vColor, (0, 40, vBloqueTamano, vBloqueTamano), 1 )
-            pygame.draw.rect(vVentana, vColor, (40,40 , vBloqueTamano, vBloqueTamano), 1 )
-            pygame.draw.rect(vVentana, vColor, (80,40 , vBloqueTamano, vBloqueTamano), 1 )
-            pygame.draw.rect(vVentana, vColor, (120,40 , vBloqueTamano, vBloqueTamano), 1 )
-            #fila 3
-            pygame.draw.rect(vVentana, vColor, (0, 80, vBloqueTamano, vBloqueTamano), 1 )
-            pygame.draw.rect(vVentana, vColor, (40,80 , vBloqueTamano, vBloqueTamano), 1 )
-            pygame.draw.rect(vVentana, vColor, (80,80 , vBloqueTamano, vBloqueTamano), 1 )
-            pygame.draw.rect(vVentana, vColor, (120,80 , vBloqueTamano, vBloqueTamano), 1 )
+    for fila in range(vCantidadFilas):
+        for columna in range(vCantidadColumnas):
+            x = columna * vBloqueTamano
+            y = fila * vBloqueTamano
+            pygame.draw.rect(vVentana, vColor, (x, y, vBloqueTamano, vBloqueTamano), 1)
 
 
 ############################################################
 #  inicia el juego
 ############################################################
-
 
 # inicia el game loop
 vVentana = pygame.display.set_mode((vVentanaAncho, vVentanaAlto))
@@ -105,7 +102,6 @@ while ejecutando:
     vVentana.fill((0, 0, 0))
 
     dibujaCuadricula()
-
     pygame.display.update()
 
 
