@@ -110,15 +110,27 @@ def movimiento(event):
     if event.type == pygame.KEYDOWN:
         if event.key == tecla_izquierda:
             vPosicionX -= velocidad_horizontal
-            if colision_con_borde(vPosicionX, vPosiciony, vBloqueTamano * 4):
+            if colision_con_borde(vPosicionX, vPosiciony, vBloqueTamano * 2):
                 vPosicionX += velocidad_horizontal
         elif event.key == tecla_derecha:
             vPosicionX += velocidad_horizontal
-            if colision_con_borde(vPosicionX, vPosiciony, vBloqueTamano * 4):
+            if colision_con_borde(vPosicionX, vPosiciony, vBloqueTamano * 2):
                 vPosicionX -= velocidad_horizontal
 
 
+# Lista de colores de bloques
+colores = [(255, 0, 0), (0, 255, 0), (0, 0, 255)]
 
+# Definir tipos de bloques
+bloques = [
+    [[1, 1, 1, 1]],
+    [[1, 1, 1], [1, 0, 0]],
+    [[1, 1, 1], [0, 0, 1]],
+]
+
+# Seleccionar un bloque aleatorio
+bloqueActual = random.choice(bloques)
+bloqueColor = random.choice(colores)
 
 ############################################################
 #  inicia el juego
@@ -146,9 +158,22 @@ while ejecutando:
     dibujaCuadricula()
     movimiento(event)
     #Dibuja el cuadrado
-    pygame.draw.rect(vVentana, vColorBloque, (vPosicionX, vPosiciony, vBloqueTamano * 4, vBloqueTamano * 4), 1)
-    if vPosiciony + vBloqueTamano * 4 >= vVentanaAlto:
-        vPosiciony = vVentanaAlto - vBloqueTamano * 4
+    
+    #pygame.draw.rect(vVentana, vColorBloque, (vPosicionX, vPosiciony, vBloqueTamano * 4, vBloqueTamano * 4), 1)
+
+    #Dibuja diferentes bloques
+     
+    # Dibuja el bloque actual
+    for fila in range(len(bloqueActual)):
+        for columna in range(len(bloqueActual[0])):
+            if bloqueActual[fila][columna] == 1:
+                x = (columna * vBloqueTamano) + vPosicionX
+                y = (fila * vBloqueTamano) + vPosiciony
+                pygame.draw.rect(vVentana, bloqueColor, (x, y, vBloqueTamano, vBloqueTamano), 1)
+                
+    #Colisión con el suelo
+    if vPosiciony + vBloqueTamano * 2 >= vVentanaAlto:
+        vPosiciony = vVentanaAlto - vBloqueTamano * 2
     #Actualiza
     pygame.display.update()
     #Tiempo de caída
