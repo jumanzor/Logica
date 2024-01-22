@@ -21,7 +21,6 @@ matrix = [[0 for c in range(columnas)] for f in range(filas)]
 
 # Manejo de variables
 pygame.init()
-
 #vColor para el fondo
 vColor = (255, 255, 255)
 
@@ -105,7 +104,8 @@ def dibujaCuadricula():
         for c in range(columnas):
                 x= f * vBloqueTamano
                 y= c * vBloqueTamano
-                pygame.draw.rect(vVentana, vColor, (x, y, vBloqueTamano, vBloqueTamano), 1 )
+                pygame.draw.rect(vVentana, vColor, 
+                                 (x, y, vBloqueTamano, vBloqueTamano), 1 )
     print()
     
     
@@ -119,12 +119,26 @@ def dibujaBloqueActual():
             if bloqueActual[i][j] != 0:
                 x = (j + vPosicionX) * vBloqueTamano
                 y = (i + vPosicionY) * vBloqueTamano
-                pygame.draw.rect(vVentana, colorActual, (x, y, vBloqueTamano, vBloqueTamano))
+                pygame.draw.rect(vVentana, colorActual, 
+                                 (x, y, vBloqueTamano, vBloqueTamano))
+                #seteo el tick aquí para cuando la caida pase esta no sea super rápida
+                pygame.time.Clock().tick(15)
+       
                 
-                
-#def caidaPieza():
+    #para que caiga la pieza necesito recorrer el bloque actual y quitarle en Y hasta que.... 
+    #anteriormente definí una varible global vPosicionY la cual ya estaba en 0 
+    # y usándose para crear la pieza, ahora solo necestito restarle   
+def caidaPieza():
+    global vPosicionY
+    if vPosicionY < vCantidadFilas - len(bloqueActual):
+       vPosicionY +=1
+    #tengo un problema que va rapidísimo   
+       
+               
+    #para poder mover la pieza es recorrer el bloque actual y quitarle o sumarle en X hasta que...
+#def moverpieza():
 
-
+    #este si está más dificil
 #def colision():
                 
                 
@@ -139,8 +153,8 @@ def dibujaBloqueActual():
 #ejemplo, si se pone en 0 la figura se formará en la esquina izquierda y Y si es 0 porque las queremos arriba
 vPosicionX = vCantidadColumnas // 2 - len(bloqueActual[0]) // 2
 vPosicionY = 0
-
 vVentana = pygame.display.set_mode((vVentanaAncho, vVentanaAlto))
+
 pygame.display.set_caption("Juego del Tetris")
 ejecutando = True
 
@@ -155,6 +169,7 @@ while ejecutando:
     vVentana.fill((0, 0, 0))
 
     dibujaBloqueActual()
+    caidaPieza()
     dibujaCuadricula()
     
 
