@@ -162,9 +162,16 @@ while ejecutando:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             ejecutando = False
+            #este event.type recibe señales del teclado entonces
+            # meti que cuando la tecla sea felcha izqui o derecha
+            # le sume o le reste a la posicion que ya se está usando al crear los bloques
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 ejecutando = False
+            if event.key ==pygame.K_LEFT:
+                vPosicionX -= 1
+            if event.key == pygame.K_RIGHT:
+                vPosicionX +=1
 
     vVentana.fill((0, 0, 0))
 
