@@ -22,7 +22,25 @@ matrix = [[0 for c in range(columnas)] for f in range(filas)]
 # Manejo de variables
 pygame.init()
 
+#vColor para el fondo
 vColor = (255, 255, 255)
+
+#Colores es una lista de colores el cual agarra un valor al azar (0,1,2,3,4,5,6,7...) 
+#y le da el "valor completo" al metodo
+colores = [
+    (255, 0, 0),     # Rojo
+    (0, 255, 0),     # Verde
+    (0, 0, 255),     # Azul
+    (255, 255, 0),   # Amarillo
+    (255, 0, 255),   # Magenta
+    (0, 255, 255),   # Cian
+    (255, 165, 0),   # Naranja
+    (128, 0, 128),   # Púrpura
+    (255, 140, 0),   # Naranja oscuro
+    (0, 128, 0)      # Verde oscuro
+]
+
+colorActual=random.choice(colores)
 
 # Configuración de la ventana
 vVentanaAncho = 401
@@ -94,15 +112,18 @@ def dibujaCuadricula():
     #Este metodo recorre el tamaño de bloqueactual y para poder pintarlo lo suma por vPosicionX y vPosicionY 
     # y lo multiplica por el tamaño del bloque
 def dibujaBloqueActual():
+            #el primer len agarra la cantidad de filas
     for i in range(len(bloqueActual)):
+            #y el bloqueactual[i] las columnas
         for j in range(len(bloqueActual[i])):
             if bloqueActual[i][j] != 0:
                 x = (j + vPosicionX) * vBloqueTamano
                 y = (i + vPosicionY) * vBloqueTamano
-                pygame.draw.rect(vVentana, vColor, (x, y, vBloqueTamano, vBloqueTamano))
+                pygame.draw.rect(vVentana, colorActual, (x, y, vBloqueTamano, vBloqueTamano))
                 
                 
 #def caidaPieza():
+
 
 #def colision():
                 
