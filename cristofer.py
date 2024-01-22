@@ -2,17 +2,6 @@
 
 print('hola mundo...')
 
-#problema: Juego de tetris
-    #Pintar el fondo            listo
-    #crear una pieza
-    #que la pieza caiga
-    #mover la pieza (der/izq)
-    #detectar colisiones
-    #eliminar la linea completa
-    #rotar piezas
-    #diferentes tipos de pieza
-
-
 import pygame
 import sys, time
 import random
@@ -24,25 +13,7 @@ import random
 global vPosicionX, vPosicionY, nuevo_x, nuevo_y
 global bloqueActual
 
-#prueba matriz 1
-matriz = [[0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0]]
-
-
-#prueba matriz 2
+#prueba matriz 
 filas = 10
 columnas = 20
 matrix = [[0 for c in range(columnas)] for f in range(filas)]
@@ -52,7 +23,6 @@ matrix = [[0 for c in range(columnas)] for f in range(filas)]
 pygame.init()
 
 vColor = (255, 255, 255)
-
 
 # Configuración de la ventana
 vVentanaAncho = 401
@@ -64,10 +34,50 @@ vCantidadFilas = 20
 vCantidadColumnas = 10
 vBloqueTamano = vVentanaAncho // vCantidadColumnas
 
+# Configuración de bloques
+BloqueT = [
+    [0, 1, 0],
+    [1, 1, 1]
+]
+
+BloqueL = [
+    [0, 0, 2],
+    [2, 2, 2]
+]
+
+BloqueI = [
+    [3, 3, 3, 3]
+]
+
+BloqueO = [
+    [4, 4],
+    [4, 4]
+]
+
+BloqueS = [
+    [5, 5, 0],
+    [0, 5, 5]
+]
+
+BloqueS2 = [
+    [0, 6, 6],
+    [6, 6, 0]
+]
+
+#bloques es una lista que almacena las listas con las formas de los bloques
+bloques = [BloqueT, BloqueL, BloqueI, BloqueO, BloqueS, BloqueS2]
+    
+#bloqueActual usa bloques para generar un numero random y imprimirlo en la matriz
+bloqueActual = random.choice(bloques)
 
 ############################################################
 #  funciones
 ############################################################
+
+
+    #el metodo dibujar cuadricula usa el len(matriz) para no salirse de los limites,
+    #recorre filas y columnas multiplicados por el tamaño del bloque para dar tamaño a las celdas
+    #y pinta el rectangulo
 def dibujaCuadricula():
     #intento de recorrer matriz y meter los valores en el x, y.
     prueba = matrix
@@ -81,37 +91,34 @@ def dibujaCuadricula():
     print()
     
     
-#ficha
-class ficha:
-    x = 0 #x, y para meter en el metodo pygame.draw.rect
-    y = 0
-    figura = [
-        [[1, 5, 9, 13], [4, 5, 6, 7]],
-        [[4, 5, 9, 10], [2, 6, 5, 9]],
-        [[6, 7, 9, 10], [1, 5, 6, 10]],
-        [[1, 2, 5, 9], [0, 4, 5, 6], [1, 5, 9, 8], [4, 5, 6, 10]],
-        [[1, 2, 6, 10], [5, 6, 7, 9], [2, 6, 10, 11], [3, 5, 6, 7]],
-        [[1, 4, 5, 6], [1, 4, 5, 9], [4, 5, 6, 9], [1, 5, 6, 9]],
-        [[1, 2, 5, 6]] #cuadrado
-    ] 
-    
-    #Hasta aqui no sé como implementar las fichas
-    def recorrerficha(): #este metodo ya es capaz de repintar sobre la primer cuadrícula
-        test = ficha.figura
-        for f in range(4):
-            for ff in range(4):
-                x = f * vBloqueTamano
-                y = ff * vBloqueTamano
-                pygame.draw.rect(vVentana, (100, 100, 100), (x, y, vBloqueTamano, vBloqueTamano), 1 )
+    #Este metodo recorre el tamaño de bloqueactual y para poder pintarlo lo suma por vPosicionX y vPosicionY 
+    # y lo multiplica por el tamaño del bloque
+def dibujaBloqueActual():
+    for i in range(len(bloqueActual)):
+        for j in range(len(bloqueActual[i])):
+            if bloqueActual[i][j] != 0:
+                x = (j + vPosicionX) * vBloqueTamano
+                y = (i + vPosicionY) * vBloqueTamano
+                pygame.draw.rect(vVentana, vColor, (x, y, vBloqueTamano, vBloqueTamano))
+                
+                
+#def caidaPieza():
 
-
-    
-
+#def colision():
+                
+                
 ############################################################
 #  inicia el juego
 ############################################################
 
 # inicia el game loop
+    #establece la posición inicial en el eje X para el bloque
+    #vCantidadColumnas // 2 agarra la mitad de la cuadrícula para que la pieza salga centrada
+    #len(bloqueActual[0]) // 2 mitad del ancho del bloque actual en el eje X
+#ejemplo, si se pone en 0 la figura se formará en la esquina izquierda y Y si es 0 porque las queremos arriba
+vPosicionX = vCantidadColumnas // 2 - len(bloqueActual[0]) // 2
+vPosicionY = 0
+
 vVentana = pygame.display.set_mode((vVentanaAncho, vVentanaAlto))
 pygame.display.set_caption("Juego del Tetris")
 ejecutando = True
@@ -126,17 +133,14 @@ while ejecutando:
 
     vVentana.fill((0, 0, 0))
 
+    dibujaBloqueActual()
     dibujaCuadricula()
-    ficha.recorrerficha()
+    
 
     pygame.display.update()
 
 
 pygame.quit()
 sys.exit()
-
-#piezas
-  #imagino que es crear un objeto 
-#que necesito?, crear el objeto, que se dibuje, que se mueva
 
 
