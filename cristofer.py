@@ -21,6 +21,7 @@ matrix = [[0 for c in range(columnas)] for f in range(filas)]
 
 # Manejo de variables
 pygame.init()
+
 #vColor para el fondo
 vColor = (255, 255, 255)
 
@@ -97,17 +98,14 @@ bloqueActual = random.choice(bloques)
     #y pinta el rectangulo
 def dibujaCuadricula():
     #intento de recorrer matriz y meter los valores en el x, y.
-    prueba = matrix
-    filas = len(prueba)
-    columnas = len(prueba[0])
+    filas = len(matrix)
+    columnas = len(matrix[0])
     for f in range(filas):
         for c in range(columnas):
                 x= f * vBloqueTamano
                 y= c * vBloqueTamano
                 pygame.draw.rect(vVentana, vColor, 
                                  (x, y, vBloqueTamano, vBloqueTamano), 1 )
-    print()
-    
     
     #Este metodo recorre el tamaño de bloqueactual y para poder pintarlo lo suma por vPosicionX y vPosicionY 
     # y lo multiplica por el tamaño del bloque
@@ -122,7 +120,7 @@ def dibujaBloqueActual():
                 pygame.draw.rect(vVentana, colorActual, 
                                  (x, y, vBloqueTamano, vBloqueTamano))
                 #seteo el tick aquí para cuando la caida pase esta no sea super rápida
-                pygame.time.Clock().tick(15)
+                pygame.time.Clock().tick(25)
        
                 
     #para que caiga la pieza necesito recorrer el bloque actual y quitarle en Y hasta que.... 
@@ -130,18 +128,16 @@ def dibujaBloqueActual():
     # y usándose para crear la pieza, ahora solo necestito restarle   
 def caidaPieza():
     global vPosicionY
-    if vPosicionY < vCantidadFilas - len(bloqueActual):
+    if vPosicionY < vCantidadFilas - len(bloqueActual) and not colision():
        vPosicionY +=1
     #tengo un problema que va rapidísimo   
        
+       
+    #los 2 más dificiles para el final
+def colision():
+    bloqueActual[vPosicionX <=-1 or vPosicionX ==11][vPosicionY > 19]
+                
                
-    #para poder mover la pieza es recorrer el bloque actual y quitarle o sumarle en X hasta que...
-#def moverpieza():
-
-    #este si está más dificil
-#def colision():
-                
-                
 ############################################################
 #  inicia el juego
 ############################################################
@@ -155,7 +151,7 @@ vPosicionX = vCantidadColumnas // 2 - len(bloqueActual[0]) // 2
 vPosicionY = 0
 vVentana = pygame.display.set_mode((vVentanaAncho, vVentanaAlto))
 
-pygame.display.set_caption("Juego del Tetris")
+pygame.display.set_caption("Tetris")
 ejecutando = True
 
 while ejecutando:
@@ -172,11 +168,18 @@ while ejecutando:
                 vPosicionX -= 1
             if event.key == pygame.K_RIGHT:
                 vPosicionX +=1
+            if event.key == pygame.K_DOWN:
+                vPosicionY +=1
+            
+            
 
     vVentana.fill((0, 0, 0))
 
+    
+    
     dibujaBloqueActual()
     caidaPieza()
+    colision()
     dibujaCuadricula()
     
 
