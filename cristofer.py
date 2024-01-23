@@ -128,16 +128,15 @@ def dibujaBloqueActual():
     # y usándose para crear la pieza, ahora solo necestito restarle   
 def caidaPieza():
     global vPosicionY
-    if vPosicionY < vCantidadFilas - len(bloqueActual) and not colision():
+    if vPosicionY < vCantidadFilas - len(bloqueActual):
        vPosicionY +=1
-    #tengo un problema que va rapidísimo   
-       
-       
-    #los 2 más dificiles para el final
-def colision():
-    bloqueActual[vPosicionX <=-1 or vPosicionX ==11][vPosicionY > 19]
-                
-               
+    #tengo un problema que va rapidísimo  
+    
+    #sacado mediente internet
+def rotaBloque():
+    global bloqueActual
+    bloqueActual = [list(row) for row in zip(*reversed(bloqueActual))] 
+             
 ############################################################
 #  inicia el juego
 ############################################################
@@ -161,30 +160,26 @@ while ejecutando:
             #este event.type recibe señales del teclado entonces
             # meti que cuando la tecla sea felcha izqui o derecha
             # le sume o le reste a la posicion que ya se está usando al crear los bloques
+            # además de bloquear los numeros para el movimiento
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 ejecutando = False
-            if event.key ==pygame.K_LEFT:
+            if event.key ==pygame.K_LEFT and vPosicionX > 0:
                 vPosicionX -= 1
-            if event.key == pygame.K_RIGHT:
+            if event.key == pygame.K_RIGHT and vPosicionX < 7:
                 vPosicionX +=1
-            if event.key == pygame.K_DOWN:
+            if event.key == pygame.K_DOWN and vPosicionY > 19:
                 vPosicionY +=1
+            if event.key == pygame.K_UP:
+                rotaBloque()
             
-            
-
     vVentana.fill((0, 0, 0))
 
-    
-    
     dibujaBloqueActual()
     caidaPieza()
-    colision()
     dibujaCuadricula()
-    
 
     pygame.display.update()
-
 
 pygame.quit()
 sys.exit()
