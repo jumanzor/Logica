@@ -98,6 +98,7 @@ bloqueActual = random.choice(bloques)
     #y pinta el rectangulo
 def dibujaCuadricula():
     #intento de recorrer matriz y meter los valores en el x, y.
+        #realmente ni hace falta la matriz, con pasarle 10 en fila y 20 de columnas debería funcionar
     filas = len(matrix)
     columnas = len(matrix[0])
     for f in range(filas):
@@ -106,6 +107,7 @@ def dibujaCuadricula():
                 y= c * vBloqueTamano
                 pygame.draw.rect(vVentana, vColor, 
                                  (x, y, vBloqueTamano, vBloqueTamano), 1 )
+    
     
     #Este metodo recorre el tamaño de bloqueactual y para poder pintarlo lo suma por vPosicionX y vPosicionY 
     # y lo multiplica por el tamaño del bloque
@@ -130,9 +132,13 @@ def caidaPieza():
     global vPosicionY
     if vPosicionY < vCantidadFilas - len(bloqueActual):
        vPosicionY +=1
-    #tengo un problema que va rapidísimo  
     
-    #sacado mediente internet
+    
+    #sacado de internet
+    #reversed(bloqueActual) inverte las filas la primera por la ultima, la segunda por la penultima..
+    #zip desempaqueta las filas invertidas pasandolas a columnas y el * pasa cada fila como argumento separado
+    #list row for row in hace cada tupla de columnas en una lista
+    #bloqueActual = lo cambia y hace que rote en sentido horario
 def rotaBloque():
     global bloqueActual
     bloqueActual = [list(row) for row in zip(*reversed(bloqueActual))] 
@@ -142,7 +148,8 @@ def rotaBloque():
 ############################################################
 
 # inicia el game loop
-    #establece la posición inicial en el eje X para el bloque
+
+#establece la posición inicial en el eje X para el bloque
     #vCantidadColumnas // 2 agarra la mitad de la cuadrícula para que la pieza salga centrada
     #len(bloqueActual[0]) // 2 mitad del ancho del bloque actual en el eje X
 #ejemplo, si se pone en 0 la figura se formará en la esquina izquierda y Y si es 0 porque las queremos arriba
@@ -164,6 +171,8 @@ while ejecutando:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 ejecutando = False
+                #limité el espacio de la ficha para moverse sin embargo al ser fichas de diferente tamaño en algunas
+                # no funciona perfecto pienso que se puede cambiar por vventanaaltura, vvtentana ancho.
             if event.key ==pygame.K_LEFT and vPosicionX > 0:
                 vPosicionX -= 1
             if event.key == pygame.K_RIGHT and vPosicionX < 7:
@@ -180,6 +189,7 @@ while ejecutando:
     dibujaCuadricula()
 
     pygame.display.update()
+    
 
 pygame.quit()
 sys.exit()
