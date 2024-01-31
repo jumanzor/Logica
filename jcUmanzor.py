@@ -14,9 +14,6 @@
 8. tener varios tipos de piezas
 '''
 
-
-
-
 import pygame
 import sys
 import random
@@ -90,13 +87,13 @@ BloqueO = [
 ]
 
 BloqueS = [
-    [5, 5, 0, 0],
-    [0, 0, 5, 5]
+    [5, 5, 0],
+    [0, 5, 5]
 ]
 
 BloqueS2 = [
-    [0, 0, 6, 6],
-    [6, 6, 0, 0]
+    [0, 6, 6],
+    [6, 6, 0]
 ]
 
 bloques = [BloqueT, BloqueL, BloqueI, BloqueO, BloqueS, BloqueS2]
@@ -224,6 +221,8 @@ while ejecutando:
                 moverBloque(-1, 0, bloqueActual)
             if event.key == pygame.K_RIGHT:
                 moverBloque(1, 0,bloqueActual)
+            if event.key == (pygame.K_DOWN):
+                moverBloque(0,+1, bloqueActual)
         elif event.type == vTiempoEvento:
                 moverBloque(0,1,bloqueActual)
 

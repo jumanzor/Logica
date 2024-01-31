@@ -44,13 +44,16 @@ colorActual=random.choice(colores)
 
 # Configuración de la ventana
 vVentanaAncho = 401
-vVentanaAlto = 801
+vVentanaAlto = 601
 
 
 # Configuración de la cuadrícula a dibujar
-vCantidadFilas = 20
+vCantidadFilas = 15
 vCantidadColumnas = 10
 vBloqueTamano = vVentanaAncho // vCantidadColumnas
+
+# Inicialización de la cuadrícula de juego
+vCuadricula = []
 
 # Configuración de bloques
 BloqueT = [
@@ -142,6 +145,7 @@ def caidaPieza():
 def rotaBloque():
     global bloqueActual
     bloqueActual = [list(row) for row in zip(*reversed(bloqueActual))] 
+               
              
 ############################################################
 #  inicia el juego
@@ -150,10 +154,7 @@ def rotaBloque():
 # inicia el game loop
 
 #establece la posición inicial en el eje X para el bloque
-    #vCantidadColumnas // 2 agarra la mitad de la cuadrícula para que la pieza salga centrada
-    #len(bloqueActual[0]) // 2 mitad del ancho del bloque actual en el eje X
-#ejemplo, si se pone en 0 la figura se formará en la esquina izquierda y Y si es 0 porque las queremos arriba
-vPosicionX = vCantidadColumnas // 2 - len(bloqueActual[0]) // 2
+vPosicionX = 3
 vPosicionY = 0
 vVentana = pygame.display.set_mode((vVentanaAncho, vVentanaAlto))
 
@@ -183,6 +184,7 @@ while ejecutando:
                 rotaBloque()
             
     vVentana.fill((0, 0, 0))
+
 
     dibujaBloqueActual()
     caidaPieza()
